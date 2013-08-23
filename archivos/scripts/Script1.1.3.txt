@@ -1,0 +1,12 @@
+ALTER TABLE  `terceros` ADD  `Plazo` INT NULL DEFAULT  '0' AFTER  `Celular` ,
+ADD  `IdFormaPago` INT NULL DEFAULT  '1' AFTER  `Plazo`;
+
+CREATE TABLE IF NOT EXISTS `formas_pago` (
+  `IdFormaPago` int(11) NOT NULL,
+  `NmFormaPago` varchar(60) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`IdFormaPago`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+INSERT INTO `formas_pago` (`IdFormaPago`, `NmFormaPago`) VALUES
+(1, 'CONTADO'),
+(2, 'CREDITO');
