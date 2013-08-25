@@ -1,0 +1,44 @@
+DROP TABLE reportes;
+CREATE TABLE IF NOT EXISTS `reportes` (
+  `IdReporte` int(11) NOT NULL,
+  `Tipo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `Nombre` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
+  `Ruta` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`IdReporte`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+
+INSERT INTO `reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES
+(1, 'Listados', 'Listado de rutas', 'Rutas.rpt'),
+(2, 'Listados', 'Acuerdos Comerciales', 'Acuerdos comerciales.rpt'),
+(3, 'Movimiento', 'Pendiente por despachar', 'PENDIENTE POR DESPACHAR.rpt'),
+(4, 'Movimiento', 'Orden de despacho', 'ORDEN DE DESPACHO.rpt'),
+(5, 'Movimiento', 'Ventas de contado', 'Ventas Contado.rpt'),
+(6, 'Movimiento', 'Relacion de guia', 'RELACION DE GUIAS.rpt'),
+(7, 'Movimiento', 'Produccion general', 'Producccion General por Clientes.rpt'),
+(8, 'Movimiento', 'Contraentregas', 'Guias Contraentrega y Recaudos.rpt'),
+(9, 'Movimiento', 'Novedades pendientes', '9 Novedades pendientes.rpt'),
+(10, 'Facturacion', 'Pendientes por facturar', 'Pendientes por facturar.rpt'),
+(11, 'Movimiento', 'Novedad solucionada', '10 Novedad.rpt'),
+(12, 'Movimiento', 'Pendientes descargar', '12 Pendientes por descargar.rpt'),
+(13, 'Movimiento', 'Pendientes descargar', '13 Produccion por ruta.rpt'),
+(14, 'Facturacion', 'Pendientes por facturar', 'Facturado.rpt'),
+(15, 'Movimiento', 'Impresion de la guia', 'ImpGuia.rpt'),
+(16, 'Movimiento', 'Impresion de manifiesto', 'FormatoManifiesto.rpt'),
+(17, 'Movimiento', 'Orden de recogida', 'ORDEN DE RECOGIDA.rpt'),
+(18, 'Movimiento', 'Liquidacion despacho', 'Liquidar despacho.rpt'),
+(19, 'Movimiento', 'Resumen despacho', 'Resumen de Despacho.rpt'),
+(20, 'Movimiento', 'COmparacion de feltes', '20 FletePagado vs FleteCobrado.rpt'),
+(21, 'Monitoreo', 'Reporte monitoreo', '1 Reporte de monitoreo.rpt'),
+(22, 'Movimiento', 'Pendiente por despachar ciudad', 'PENDIENTE POR DESPACHAR CIUDAD.rpt'),
+(23, 'Recogidas', 'Listado de recogidas', 'Listado de recogidas.rpt'),
+(24, 'Recogidas', 'Listado de recogidas', 'LISTADO DE RECOGIDAS FECHA.rpt'),
+(25, 'Movimiento', 'Despachos por cerrar', 'DESPACHOS PENDIENTES POR CERRAR.rpt'),
+(26, 'Facturacion', 'Impresion Factura', 'Factura.rpt'),
+(27, 'Facturacion', 'Pendiente por facturar contado', 'Pendientes por facturar contado.rpt'),
+(28, 'Facturacion', 'Pendiente por facturar destino', 'Pendientes por facturar destino.rpt'),
+(29, 'Movimiento', 'Impresion de manifiesto detalle', 'FormatoManifiestoDetalle.rpt');
+
+
+ALTER TABLE  `informacionempresa` ADD  `CodRegionalMin` VARCHAR( 50 ) NOT NULL ,
+ADD  `CodEmpresaMin` VARCHAR( 50 ) NOT NULL;
