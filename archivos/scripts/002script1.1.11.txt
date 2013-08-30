@@ -1,0 +1,2 @@
+ALTER TABLE  `negociaciones` ADD  `NoAplicarDctoReexpediciones` BIT( 1 ) NULL DEFAULT b'0';
+ALTER TABLE  `ciudades` ADD  `Reexpedicion` BIT(1) NULL DEFAULT b'0'
