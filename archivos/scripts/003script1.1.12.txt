@@ -1,0 +1,138 @@
+CREATE TABLE IF NOT EXISTS `recibos_caja` (
+  `IdRecibo` int(11) NOT NULL,
+  `Fecha` date DEFAULT NULL,
+  `IdTercero` varchar(11) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Total` double DEFAULT '0',
+  `Comentarios` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Impreso` tinyint(4) NOT NULL DEFAULT '0',
+  `Anulado` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`IdRecibo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+CREATE TABLE IF NOT EXISTS `recibos_caja_det` (
+  `IdReciboDet` int(11) NOT NULL AUTO_INCREMENT,
+  `IdRecibo` int(11) DEFAULT NULL,
+  `IdCxC` int(11) DEFAULT NULL,
+  `Tipo` tinyint(4) DEFAULT NULL,
+  `IdCuenta` int(11) DEFAULT NULL,
+  `Valor` double DEFAULT NULL,
+  PRIMARY KEY (`IdReciboDet`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
+CREATE TABLE IF NOT EXISTS `notas_credito` (
+  `IdNotaCredito` int(11) NOT NULL,
+  `Fecha` date DEFAULT NULL,
+  `IdTercero` varchar(11) CHARACTER SET latin1 DEFAULT NULL,
+  `Total` double DEFAULT '0',
+  `Comentarios` varchar(250) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `Impreso` tinyint(4) NOT NULL DEFAULT '0',
+  `Anulado` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`IdNotaCredito`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+CREATE TABLE IF NOT EXISTS `notas_credito_det` (
+  `IdNotaCreditoDet` int(11) NOT NULL AUTO_INCREMENT,
+  `IdNotaCredito` int(11) DEFAULT NULL,
+  `IdCxC` int(11) DEFAULT NULL,
+  `Tipo` tinyint(4) DEFAULT NULL,
+  `IdCuenta` int(11) DEFAULT NULL,
+  `Valor` double DEFAULT NULL,
+  PRIMARY KEY (`IdNotaCreditoDet`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=13 ;
+
+ALTER TABLE  `recibos_caja` CHANGE  `IdTercero`  `IdTercero` VARCHAR( 11 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE  `guias` ADD  `Exportado` TINYINT( 1 ) NULL DEFAULT  '0';
+ALTER TABLE  `cuentas_cobrar` CHANGE  `IdTercero`  `IdTercero` VARCHAR( 11 ) NULL DEFAULT NULL;
+ALTER TABLE  `cuentas_cobrar` CHANGE  `IdCxP`  `IdCxP` INT( 11 ) NOT NULL AUTO_INCREMENT;
+ALTER TABLE  `cuentas_cobrar` ADD  `VrFlete` DOUBLE NULL DEFAULT  '0',
+ADD  `VrManejo` DOUBLE NULL DEFAULT  '0';
+ALTER TABLE  `cuentas_cobrar` CHANGE  `Total`  `Total` DOUBLE NULL DEFAULT  '0',
+CHANGE  `Abono`  `Abono` DOUBLE NULL DEFAULT  '0',
+CHANGE  `Saldo`  `Saldo` DOUBLE NULL DEFAULT  '0';
+ALTER TABLE  `cuentas_cobrar` ADD  `Condicion` INT NULL DEFAULT  '0';
+ALTER TABLE  `cuentas_cobrar` CHANGE  `IdCxP`  `IdCxC` INT( 11 ) NOT NULL AUTO_INCREMENT;
+ALTER TABLE  `consecutivos` ADD  `RecibosCaja` INT NULL;
+UPDATE  `bdkl`.`consecutivos` SET  `RecibosCaja` =  '1';
+ALTER TABLE  `recibos_caja` CHANGE  `IdRecibo`  `IdRecibo` INT( 11 ) NOT NULL;
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('30', 'Facturacion', 'Cartera por edades', 'Cartera por edades.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('31',  'Facturacion',  'Imprimir recibo caja',  'Imprimir recibo caja.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('32', 'Facturacion', 'Imprimir nota credito', 'Imprimir nota credito.rpt');
+ALTER TABLE  `consecutivos` ADD  `Id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+ALTER TABLE  `consecutivos` ADD  `NotasCredito` INT NOT NULL DEFAULT  '0';
+
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_cartera_edades` AS 
+  select 
+    `cuentas_cobrar`.`NroDocumento` AS `NroDocumento`,
+    `cuentas_cobrar`.`FechaDoc` AS `FechaDoc`,
+    `cuentas_cobrar`.`FhVence` AS `FhVence`,
+    `cuentas_cobrar`.`IdTercero` AS `IdTercero`,
+    `cuentas_cobrar`.`Total` AS `Total`,
+    `cuentas_cobrar`.`Abono` AS `Abono`,
+    `cuentas_cobrar`.`Saldo` AS `Saldo`,
+    `cuentas_cobrar`.`VrFlete` AS `VrFlete`,
+    `cuentas_cobrar`.`VrManejo` AS `VrManejo`,
+    `cuentas_cobrar`.`Condicion` AS `Condicion`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    (to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) AS `DiasVencida`,
+    (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) < 1) then 'Por Vencer' else 'Vencida' end) AS `TipoVencimiento`,
+    (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) < 1) then 'Por Vencer' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 0 and 30) then '30' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 31 and 60) then '60' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 61 and 90) then '90' else 'Mas de 90' end) end) end) end) AS `Rango`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `Nombre`,
+    `informacionempresa`.`Direccion` AS `Direccion`,
+    `informacionempresa`.`Telefono` AS `Telefono`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `cuentas_cobrar`.`IdCxC` AS `IdCxC` 
+  from 
+    ((`cuentas_cobrar` left join `terceros` on((`cuentas_cobrar`.`IdTercero` = `terceros`.`IDTercero`))) join `informacionempresa`);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_imprimir_recibo_caja` AS 
+  select 
+    `recibos_caja_det`.`IdReciboDet` AS `IdReciboDet`,
+    `recibos_caja_det`.`IdRecibo` AS `IdRecibo`,
+    `recibos_caja_det`.`IdCxC` AS `IdCxC`,
+    `recibos_caja_det`.`Tipo` AS `Tipo`,
+    `recibos_caja_det`.`IdCuenta` AS `IdCuenta`,
+    `recibos_caja_det`.`Valor` AS `Valor`,
+    `recibos_caja`.`Fecha` AS `Fecha`,
+    `recibos_caja`.`IdTercero` AS `IdTercero`,
+    `recibos_caja`.`Total` AS `Total`,
+    `recibos_caja`.`Comentarios` AS `Comentarios`,
+    `recibos_caja`.`Impreso` AS `Impreso`,
+    `recibos_caja`.`Anulado` AS `Anulado`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `Nombre`,
+    `informacionempresa`.`Direccion` AS `Direccion`,
+    `informacionempresa`.`Telefono` AS `Telefono`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `informacionempresa`.`Id` AS `Id`,
+    `cuentas_cobrar`.`NroDocumento` AS `NroDocumento`,
+    `cuentas_cobrar`.`FechaDoc` AS `FechaDoc`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    `terceros`.`Direccion` AS `DireccionCliente`,
+    `terceros`.`Telefono` AS `TelefonoCliente` 
+  from 
+    ((((`recibos_caja_det` left join `recibos_caja` on((`recibos_caja_det`.`IdRecibo` = `recibos_caja`.`IdRecibo`))) left join `cuentas_cobrar` on((`recibos_caja_det`.`IdCxC` = `cuentas_cobrar`.`IdCxC`))) left join `terceros` on((convert(`recibos_caja`.`IdTercero` using utf8) = convert(`terceros`.`IDTercero` using utf8)))) join `informacionempresa`);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_imprimir_nota_credito` AS 
+  select 
+    `notas_credito_det`.`IdNotaCreditoDet` AS `IdNotaCreditoDet`,
+    `notas_credito_det`.`IdNotaCredito` AS `IdNotaCredito`,
+    `notas_credito_det`.`IdCxC` AS `IdCxC`,
+    `notas_credito_det`.`Tipo` AS `Tipo`,
+    `notas_credito_det`.`IdCuenta` AS `IdCuenta`,
+    `notas_credito_det`.`Valor` AS `Valor`,
+    `notas_credito`.`Fecha` AS `Fecha`,
+    `notas_credito`.`IdTercero` AS `IdTercero`,
+    `notas_credito`.`Total` AS `Total`,
+    `notas_credito`.`Comentarios` AS `Comentarios`,
+    `notas_credito`.`Impreso` AS `Impreso`,
+    `notas_credito`.`Anulado` AS `Anulado`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `Nombre`,
+    `informacionempresa`.`Direccion` AS `Direccion`,
+    `informacionempresa`.`Telefono` AS `Telefono`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `informacionempresa`.`Id` AS `Id`,
+    `cuentas_cobrar`.`NroDocumento` AS `NroDocumento`,
+    `cuentas_cobrar`.`FechaDoc` AS `FechaDoc`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    `terceros`.`Direccion` AS `DireccionCliente`,
+    `terceros`.`Telefono` AS `TelefonoCliente` 
+  from 
+    ((((`notas_credito_det` left join `notas_credito` on((`notas_credito_det`.`IdNotaCredito` = `notas_credito`.`IdNotaCredito`))) left join `cuentas_cobrar` on((`notas_credito_det`.`IdCxC` = `cuentas_cobrar`.`IdCxC`))) left join `terceros` on((convert(`notas_credito`.`IdTercero` using utf8) = convert(`terceros`.`IDTercero` using utf8)))) join `informacionempresa`);
