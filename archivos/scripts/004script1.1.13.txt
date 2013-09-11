@@ -1,0 +1,4 @@
+ALTER TABLE  `configuracion` ADD  `ServidorCorreo` VARCHAR( 100 ) NULL ,
+ADD  `UsaAutenticacion` TINYINT NULL DEFAULT  '1',
+ADD  `UsaSSL` INT NULL DEFAULT  '0',
+ADD  `Puerto` VARCHAR( 10 ) NULL;
