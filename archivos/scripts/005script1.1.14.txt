@@ -1,0 +1,225 @@
+ALTER TABLE  `cuentas_cobrar` ADD  `GuiaFactura` TINYINT NOT NULL DEFAULT  '0';
+ALTER TABLE  `cuentas_cobrar` ADD  `TipoFactura` SMALLINT NOT NULL DEFAULT  '0' AFTER  `NroDocumento`;
+ALTER TABLE  `guias` ADD  `GuiaTipo` SMALLINT NOT NULL DEFAULT  '1' AFTER  `IdFactura3`
+ALTER TABLE  `guias` ADD  `TipoCobro` TINYINT NOT NULL DEFAULT  '1' AFTER  `GuiaTipo`;
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('33',  'Movimiento',  'Formato Guia-Factura',  'FormatoGuiaFactura.rpt');
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('34',  'Movimiento',  'Recibo caja soporte',  'ReciboCajaSoporte.rpt');
+CREATE TABLE IF NOT EXISTS `guias_tipos` (
+  `IdGuiaTipo` smallint(6) NOT NULL,
+  `NmGuiaTipo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `GuiaFactura` tinyint(4) DEFAULT '0',
+  `TipoCobro` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`IdGuiaTipo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+CREATE TABLE IF NOT EXISTS `recibos_caja_soporte` (
+  `IdRecibo` int(11) NOT NULL AUTO_INCREMENT,
+  `FechaRecibo` datetime DEFAULT NULL,
+  `VrFlete` double(15,3) DEFAULT '0.000',
+  `VrManejo` double(15,3) DEFAULT '0.000',
+  `ValorTotal` double DEFAULT '0',
+  `Guia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`IdRecibo`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
+
+
+INSERT INTO `guias_tipos` (`IdGuiaTipo`, `NmGuiaTipo`, `GuiaFactura`, `TipoCobro`) VALUES
+(1, 'GUIA DE TRANSPORTE', 0, 3),
+(2, 'GUIA-FACTURA CONTADO', 1, 1),
+(3, 'GUIA-FACTURA DESTINO', 1, 2);
+
+CREATE TABLE IF NOT EXISTS `facturas_venta` (
+  `Numero` int(11) NOT NULL,
+  `TipoFactura` smallint(6) DEFAULT '0',
+  `Fecha` date NOT NULL,
+  `FhVence` date NOT NULL,
+  `IdTercero` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Plazo` smallint(6) NOT NULL,
+  `Valor` double NOT NULL,
+  PRIMARY KEY (`Numero`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_contraentregas` AS 
+  select 
+    `guias`.`Guia` AS `Guia`,
+    `guias`.`IdCliente` AS `IdCliente`,
+    `guias`.`DocCliente` AS `DocCliente`,
+    `guias`.`NmDestinatario` AS `NmDestinatario`,
+    `guias`.`IdCiuDestino` AS `IdCiuDestino`,
+    `ciudades`.`NmCiudad` AS `NmCiudad`,
+    `guias`.`FhEntradaBodega` AS `FhEntradaBodega`,
+    `guias`.`VrDeclarado` AS `VrDeclarado`,
+    `guias`.`VrFlete` AS `VrFlete`,
+    `guias`.`VrManejo` AS `VrManejo`,
+    `guias`.`Unidades` AS `Unidades`,
+    `guias`.`KilosReales` AS `KilosReales`,
+    `guias`.`IdDespacho` AS `IdDespacho`,
+    `guias`.`Cuenta` AS `Cuenta`,
+    `guias`.`Cliente` AS `Cliente`,
+    `guias`.`Recaudo` AS `Recaudo`,
+    `guias`.`IdTpCtaFlete` AS `IdTpCtaFlete`,
+    `guias`.`IdTpCtaManejo` AS `IdTpCtaManejo`,
+    `guias`.`Anulada` AS `Anulada`,
+    `informacionempresa`.`Id` AS `CodEmpresa`,
+    `informacionempresa`.`Nit` AS `NitEmpresa`,
+    `informacionempresa`.`Nombre` AS `NombreEmpresa`,
+    `informacionempresa`.`Direccion` AS `DireccionEmpresa`,
+    `informacionempresa`.`Telefono` AS `TelefonoEmpresa`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `informacionempresa`.`Email` AS `EmailEmpresa` 
+  from 
+    ((`guias` join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) join `informacionempresa`) 
+  where 
+    ((`guias`.`Anulada` = 0) and ((`guias`.`TipoCobro` = 2) or (`guias`.`Recaudo` <> 0)));
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_im_formato_guia_factura` AS 
+  select 
+    `guias`.`Guia` AS `Guia`,
+    `informacionempresa`.`Nit` AS `NitEmpresa`,
+    `informacionempresa`.`Nombre` AS `NombreEmpresa`,
+    `informacionempresa`.`Direccion` AS `DireccionEmpresa`,
+    `informacionempresa`.`Telefono` AS `TelefonoEmpresa`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    `guias`.`Cuenta` AS `Cuenta`,
+    `terceros`.`Direccion` AS `Direccion`,
+    `terceros`.`Telefono` AS `Telefono`,
+    `terceros`.`IdCiudad` AS `IdCiudad`,
+    `ciudadcliente`.`NmCiudad` AS `CiudadCliente`,
+    `terceros`.`Email` AS `Email`,
+    `terceros`.`Plazo` AS `Plazo`,
+    `formas_pago`.`NmFormaPago` AS `NmFormaPago`,
+    `guias`.`VrFlete` AS `VrFlete`,
+    `guias`.`VrManejo` AS `VrManejo`,
+    `guias`.`VrDeclarado` AS `VrDeclarado`,
+    `guias`.`Unidades` AS `Unidades`,
+    `guias`.`KilosFacturados` AS `KilosFacturados`,
+    `ciudaddestino`.`NmCiudad` AS `CiudadDestino`,
+    `guias`.`DocCliente` AS `DocCliente`,
+    `guias`.`FhEntradaBodega` AS `FhEntradaBodega`,
+    (`guias`.`VrFlete` + `guias`.`VrManejo`) AS `Total`,
+    `guias`.`NmDestinatario` AS `NmDestinatario`,
+    `guias`.`DirDestinatario` AS `DirDestinatario`,
+    `guias`.`TelDestinatario` AS `TelDestinatario` 
+  from 
+    (((((`guias` left join `terceros` on((`guias`.`Cuenta` = `terceros`.`IDTercero`))) left join `ciudades` `ciudadcliente` on((`terceros`.`IdCiudad` = `ciudadcliente`.`IdCiudad`))) left join `formas_pago` on((`terceros`.`IdFormaPago` = `formas_pago`.`IdFormaPago`))) left join `ciudades` `ciudaddestino` on((`guias`.`IdCiuDestino` = `ciudaddestino`.`IdCiudad`))) join `informacionempresa`);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_ventascontado` AS 
+  select 
+    `guias`.`Guia` AS `Guia`,
+    `guias`.`DocCliente` AS `DocCliente`,
+    `guias`.`FhEntradaBodega` AS `FhEntradaBodega`,
+    `guias`.`VrDeclarado` AS `VrDeclarado`,
+    `guias`.`Unidades` AS `Unidades`,
+    `guias`.`KilosReales` AS `KilosReales`,
+    `guias`.`KilosFacturados` AS `KilosFacturados`,
+    `guias`.`KilosVolumen` AS `KilosVolumen`,
+    `guias`.`COIng` AS `COIng`,
+    `guias`.`Cuenta` AS `Cuenta`,
+    `guias`.`Cliente` AS `Cliente`,
+    `guias`.`Recaudo` AS `Recaudo`,
+    `guias`.`TpServicio` AS `TpServicio`,
+    `guias`.`IdTpCtaFlete` AS `IdTpCtaFlete`,
+    `guias`.`IdTpCtaManejo` AS `IdTpCtaManejo`,
+    `guias`.`GuiFac` AS `GuiFac`,
+    `guias`.`Anulada` AS `Anulada`,
+    `guias`.`NmDestinatario` AS `NmDestinatario`,
+    `guias`.`Estado` AS `Estado`,
+    `guias`.`VrFlete` AS `VrFlete`,
+    `guias`.`VrManejo` AS `VrManejo`,
+    (`guias`.`VrFlete` + `guias`.`VrManejo`) AS `Total`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `NombreEmpresa`,
+    `informacionempresa`.`Direccion` AS `DireccionEmpresa`,
+    `informacionempresa`.`Telefono` AS `TelefonoEmpresa`,
+    `informacionempresa`.`Logo` AS `Logo` 
+  from 
+    (`guias` join `informacionempresa`) 
+  where 
+    (`guias`.`TipoCobro` = 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_if_pend_fac` AS 
+  select 
+    `guias`.`Guia` AS `Guia`,
+    `guias`.`CR` AS `CR`,
+    `guias`.`NmDestinatario` AS `NmDestinatario`,
+    `guias`.`DocCliente` AS `DocCliente`,
+    `ciudades`.`NmCiudad` AS `NmCiudad`,
+    `guias`.`IdCiuDestino` AS `IdCiuDestino`,
+    `guias`.`FhEntradaBodega` AS `FhEntradaBodega`,
+    `guias`.`VrDeclarado` AS `VrDeclarado`,
+    `guias`.`VrFlete` AS `VrFlete`,
+    `guias`.`VrManejo` AS `VrManejo`,
+    `guias`.`Unidades` AS `Unidades`,
+    `guias`.`KilosReales` AS `KilosReales`,
+    `guias`.`KilosFacturados` AS `KilosFacturados`,
+    `guias`.`KilosVolumen` AS `KilosVolumen`,
+    `guias`.`Estado` AS `Estado`,
+    `guias`.`IdFactura` AS `IdFactura`,
+    `guias`.`COIng` AS `COIng`,
+    `guias`.`Cuenta` AS `Cuenta`,
+    `guias`.`Cliente` AS `Cliente`,
+    `guias`.`Recaudo` AS `Recaudo`,
+    `guias`.`TpServicio` AS `TpServicio`,
+    `guias`.`IdTpCtaFlete` AS `IdTpCtaFlete`,
+    `guias`.`IdTpCtaManejo` AS `IdTpCtaManejo`,
+    `guias`.`Anulada` AS `Anulada`,
+    `guias`.`GuiFac` AS `GuiFac`,
+    `guias`.`IdCliente` AS `IdCliente`,
+    `guias`.`IdPlanillaFactura` AS `IdPlanillaFactura`,
+    `guias`.`RelCliente` AS `RelCliente` 
+  from 
+    (`guias` join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) 
+  where 
+    ((`guias`.`Anulada` = 0) and (`guias`.`GuiFac` = 0) and (`guias`.`Facturada` = 0) and (`guias`.`TipoCobro` = 3));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_movimiento_formato_recibo_soporte` AS 
+  select 
+    `recibos_caja_soporte`.`IdRecibo` AS `IdRecibo`,
+    `recibos_caja_soporte`.`FechaRecibo` AS `FechaRecibo`,
+    `recibos_caja_soporte`.`VrFlete` AS `VrFlete`,
+    `recibos_caja_soporte`.`VrManejo` AS `VrManejo`,
+    `recibos_caja_soporte`.`ValorTotal` AS `ValorTotal`,
+    `recibos_caja_soporte`.`Guia` AS `Guia`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    `terceros`.`Direccion` AS `Direccion`,
+    `terceros`.`Telefono` AS `Telefono`,
+    `ciudadcliente`.`NmCiudad` AS `CiudadCliente`,
+    `guias`.`DocCliente` AS `DocCliente`,
+    `guias`.`NmDestinatario` AS `NmDestinatario`,
+    `guias`.`DirDestinatario` AS `DirDestinatario`,
+    `guias`.`TelDestinatario` AS `TelDestinatario`,
+    `ciudaddestino`.`NmCiudad` AS `CiudadDestino`,
+    `guias`.`Unidades` AS `Unidades`,
+    `guias`.`Cuenta` AS `Cuenta`,
+    `informacionempresa`.`Nit` AS `NitEmpresa`,
+    `informacionempresa`.`Nombre` AS `NombreEmpresa`,
+    `informacionempresa`.`Direccion` AS `DireccionEmpresa`,
+    `informacionempresa`.`Telefono` AS `TelefonoEmpresa`,
+    `informacionempresa`.`Logo` AS `Logo` 
+  from 
+    (((((`recibos_caja_soporte` left join `guias` on((`recibos_caja_soporte`.`Guia` = `guias`.`Guia`))) left join `terceros` on((`guias`.`Cuenta` = `terceros`.`IDTercero`))) left join `ciudades` `ciudadcliente` on((`terceros`.`IdCiudad` = `ciudadcliente`.`IdCiudad`))) left join `ciudades` `ciudaddestino` on((`guias`.`IdCiuDestino` = `ciudaddestino`.`IdCiudad`))) join `informacionempresa`);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_cartera_edades` AS 
+  select 
+    `cuentas_cobrar`.`NroDocumento` AS `NroDocumento`,
+    `cuentas_cobrar`.`FechaDoc` AS `FechaDoc`,
+    `cuentas_cobrar`.`FhVence` AS `FhVence`,
+    `cuentas_cobrar`.`IdTercero` AS `IdTercero`,
+    `cuentas_cobrar`.`Total` AS `Total`,
+    `cuentas_cobrar`.`Abono` AS `Abono`,
+    `cuentas_cobrar`.`Saldo` AS `Saldo`,
+    `cuentas_cobrar`.`VrFlete` AS `VrFlete`,
+    `cuentas_cobrar`.`VrManejo` AS `VrManejo`,
+    `cuentas_cobrar`.`Condicion` AS `Condicion`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    (to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) AS `DiasVencida`,
+    (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) < 1) then 'Por Vencer' else 'Vencida' end) AS `TipoVencimiento`,
+    (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) < 1) then 'Por Vencer' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 0 and 30) then '30' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 31 and 60) then '60' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 61 and 90) then '90' else 'Mas de 90' end) end) end) end) AS `Rango`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `Nombre`,
+    `informacionempresa`.`Direccion` AS `Direccion`,
+    `informacionempresa`.`Telefono` AS `Telefono`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `cuentas_cobrar`.`IdCxC` AS `IdCxC`,
+    `cuentas_cobrar`.`GuiaFactura` AS `GuiaFactura`,
+    `facturas_tipos`.`NmTipoFactura` AS `NmTipoFactura` 
+  from 
+    (((`cuentas_cobrar` left join `terceros` on((`cuentas_cobrar`.`IdTercero` = `terceros`.`IDTercero`))) left join `facturas_tipos` on((`cuentas_cobrar`.`TipoFactura` = `facturas_tipos`.`IdTipoFactura`))) join `informacionempresa`) 
+  where 
+    (`cuentas_cobrar`.`Saldo` <> 0);
