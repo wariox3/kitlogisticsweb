@@ -1,7 +1,7 @@
 ALTER TABLE  `cuentas_cobrar` ADD  `GuiaFactura` TINYINT NOT NULL DEFAULT  '0';
 ALTER TABLE  `cuentas_cobrar` ADD  `TipoFactura` SMALLINT NOT NULL DEFAULT  '0' AFTER  `NroDocumento`;
-ALTER TABLE  `guias` ADD  `GuiaTipo` SMALLINT NOT NULL DEFAULT  '1' AFTER  `IdFactura3`
-ALTER TABLE  `guias` ADD  `TipoCobro` TINYINT NOT NULL DEFAULT  '1' AFTER  `GuiaTipo`;
+ALTER TABLE  `guias` ADD  `GuiaTipo` SMALLINT NOT NULL DEFAULT  '1' AFTER  `IdFactura3`;
+ALTER TABLE  `guias` ADD  `TipoCobro` TINYINT NOT NULL DEFAULT  '3' AFTER  `GuiaTipo`;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('33',  'Movimiento',  'Formato Guia-Factura',  'FormatoGuiaFactura.rpt');
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('34',  'Movimiento',  'Recibo caja soporte',  'ReciboCajaSoporte.rpt');
 CREATE TABLE IF NOT EXISTS `guias_tipos` (

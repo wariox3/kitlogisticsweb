@@ -1,3 +1,4 @@
+ALTER TABLE  `terceros` ADD  `Celular` VARCHAR( 10 ) NULL AFTER  `Email`;
 ALTER TABLE  `terceros` ADD  `Plazo` INT NULL DEFAULT  '0' AFTER  `Celular` ,
 ADD  `IdFormaPago` INT NULL DEFAULT  '1' AFTER  `Plazo`;
 

@@ -64,3 +64,7 @@ CREATE TABLE `errores_ws` (
 )ENGINE=InnoDB
 AUTO_INCREMENT=72 CHARACTER SET 'utf8' COLLATE 'utf8_general_ci';
 COMMIT;
+ALTER TABLE  `guias` ADD  `FhRegistroEntrega` DATE NULL AFTER  `EnNovedad`;
+ALTER TABLE  `terceros` ADD  `ActualizadoWebServices` TINYINT NOT NULL DEFAULT  '0';
+ALTER TABLE  `guias` ADD  `ActualizadoWebServices` TINYINT NOT NULL DEFAULT  '0' AFTER  `FhRegistroEntrega`;
+ALTER TABLE  `vehiculos` ADD  `ActualizadoWebServices` TINYINT NOT NULL DEFAULT  '0';
