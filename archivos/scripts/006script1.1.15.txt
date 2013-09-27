@@ -1,5 +1,7 @@
 ALTER TABLE  `guias` ADD  `Abonos` DOUBLE NULL DEFAULT  '0' AFTER  `IdFactura3`;
 ALTER TABLE  `informacionempresa` ADD  `ResolucionMinTransporte` VARCHAR( 10 ) NULL;
+ALTER TABLE  `listaspreciosciudades` ADD  `Minimos` INT NULL DEFAULT  '0';
+ALTER TABLE  `temprecios` ADD  `Minimos` INT NULL DEFAULT  '0';
 DROP TABLE  `facturas_venta`;
 CREATE TABLE IF NOT EXISTS `facturas_venta` (
   `Numero` int(11) NOT NULL,
