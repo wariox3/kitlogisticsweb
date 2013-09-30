@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `facturas_venta` (
   `Valor` double NOT NULL,
   PRIMARY KEY (`Numero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
+DROP VIEW sql_im_contraentregas;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_contraentregas` AS 
   select 
     `guias`.`Guia` AS `Guia`,
@@ -70,7 +70,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_
     ((`guias` join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) join `informacionempresa`) 
   where 
     ((`guias`.`Anulada` = 0) and ((`guias`.`TipoCobro` = 2) or (`guias`.`Recaudo` <> 0)));
-
+DROP VIEW sql_im_formato_guia_factura;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_im_formato_guia_factura` AS 
   select 
     `guias`.`Guia` AS `Guia`,
@@ -102,6 +102,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
     `guias`.`TelDestinatario` AS `TelDestinatario` 
   from 
     (((((`guias` left join `terceros` on((`guias`.`Cuenta` = `terceros`.`IDTercero`))) left join `ciudades` `ciudadcliente` on((`terceros`.`IdCiudad` = `ciudadcliente`.`IdCiudad`))) left join `formas_pago` on((`terceros`.`IdFormaPago` = `formas_pago`.`IdFormaPago`))) left join `ciudades` `ciudaddestino` on((`guias`.`IdCiuDestino` = `ciudaddestino`.`IdCiudad`))) join `informacionempresa`);
+DROP VIEW sql_im_ventascontado;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_ventascontado` AS 
   select 
     `guias`.`Guia` AS `Guia`,
@@ -135,6 +136,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_
     (`guias` join `informacionempresa`) 
   where 
     (`guias`.`TipoCobro` = 1);
+DROP VIEW sql_if_pend_fac;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_if_pend_fac` AS 
   select 
     `guias`.`Guia` AS `Guia`,
@@ -169,6 +171,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_if_
     (`guias` join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) 
   where 
     ((`guias`.`Anulada` = 0) and (`guias`.`GuiFac` = 0) and (`guias`.`Facturada` = 0) and (`guias`.`TipoCobro` = 3));
+DROP VIEW sql_movimiento_formato_recibo_soporte;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_movimiento_formato_recibo_soporte` AS 
   select 
     `recibos_caja_soporte`.`IdRecibo` AS `IdRecibo`,
@@ -195,6 +198,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
     `informacionempresa`.`Logo` AS `Logo` 
   from 
     (((((`recibos_caja_soporte` left join `guias` on((`recibos_caja_soporte`.`Guia` = `guias`.`Guia`))) left join `terceros` on((`guias`.`Cuenta` = `terceros`.`IDTercero`))) left join `ciudades` `ciudadcliente` on((`terceros`.`IdCiudad` = `ciudadcliente`.`IdCiudad`))) left join `ciudades` `ciudaddestino` on((`guias`.`IdCiuDestino` = `ciudaddestino`.`IdCiudad`))) join `informacionempresa`);
+DROP VIEW sql_ic_cartera_edades;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_cartera_edades` AS 
   select 
     `cuentas_cobrar`.`NroDocumento` AS `NroDocumento`,

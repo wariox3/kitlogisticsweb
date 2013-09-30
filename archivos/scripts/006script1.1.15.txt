@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `facturas_venta` (
   `Exportada` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`Numero`,`TipoFactura`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+DROP VIEW sql_im_imprimirmanifiesto;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW `sql_im_imprimirmanifiesto` AS 
   select 
     `despachos`.`IdManifiesto` AS `IdManifiesto`,
