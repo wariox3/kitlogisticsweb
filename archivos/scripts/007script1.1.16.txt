@@ -1,0 +1,34 @@
+ALTER TABLE  `ciudades` ADD  `CuentaFlete` VARCHAR( 10 ) NULL AFTER  `CodigoDepartamento` ,
+ADD  `CuentaManejo` VARCHAR( 10 ) NULL AFTER  `CuentaFlete` ,
+ADD  `CuentaCartera` VARCHAR( 10 ) NULL AFTER  `CuentaManejo`;
+UPDATE ciudades SET CuentaFlete='41450501', CuentaManejo = '41459501', CuentaCartera = '13050501' WHERE 1;
+DROP VIEW sql_ic_cartera_edades;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_cartera_edades` AS 
+  select 
+    `cuentas_cobrar`.`NroDocumento` AS `NroDocumento`,
+    `cuentas_cobrar`.`FechaDoc` AS `FechaDoc`,
+    `cuentas_cobrar`.`FhVence` AS `FhVence`,
+    `cuentas_cobrar`.`IdTercero` AS `IdTercero`,
+    `cuentas_cobrar`.`Total` AS `Total`,
+    `cuentas_cobrar`.`Abono` AS `Abono`,
+    `cuentas_cobrar`.`Saldo` AS `Saldo`,
+    `cuentas_cobrar`.`VrFlete` AS `VrFlete`,
+    `cuentas_cobrar`.`VrManejo` AS `VrManejo`,
+    `cuentas_cobrar`.`Condicion` AS `Condicion`,
+    `cuentas_cobrar`.`TipoFactura` AS `TipoFactura`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    (to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) AS `DiasVencida`,
+    (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) < 1) then 'Por Vencer' else 'Vencida' end) AS `TipoVencimiento`,
+    (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) < 1) then 'Por Vencer' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 0 and 30) then '30' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 31 and 60) then '60' else (case when ((to_days(now()) - to_days(`cuentas_cobrar`.`FhVence`)) between 61 and 90) then '90' else 'Mas de 90' end) end) end) end) AS `Rango`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `Nombre`,
+    `informacionempresa`.`Direccion` AS `Direccion`,
+    `informacionempresa`.`Telefono` AS `Telefono`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `cuentas_cobrar`.`IdCxC` AS `IdCxC`,
+    `cuentas_cobrar`.`GuiaFactura` AS `GuiaFactura`,
+    `facturas_tipos`.`NmTipoFactura` AS `NmTipoFactura` 
+  from 
+    (((`cuentas_cobrar` left join `terceros` on((`cuentas_cobrar`.`IdTercero` = `terceros`.`IDTercero`))) left join `facturas_tipos` on((`cuentas_cobrar`.`TipoFactura` = `facturas_tipos`.`IdTipoFactura`))) join `informacionempresa`) 
+  where 
+    (`cuentas_cobrar`.`Saldo` <> 0);
