@@ -1,7 +1,7 @@
 ALTER TABLE  `ciudades` ADD  `CuentaFlete` VARCHAR( 10 ) NULL AFTER  `CodigoDepartamento` ,
 ADD  `CuentaManejo` VARCHAR( 10 ) NULL AFTER  `CuentaFlete` ,
 ADD  `CuentaCartera` VARCHAR( 10 ) NULL AFTER  `CuentaManejo`;
-UPDATE ciudades SET CuentaFlete='41450501', CuentaManejo = '41459501', CuentaCartera = '13050501' WHERE 1;
+UPDATE ciudades SET CuentaFlete='41450595', CuentaManejo = '41459501', CuentaCartera = '13050595' WHERE 1;
 DROP VIEW sql_ic_cartera_edades;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_ic_cartera_edades` AS 
   select 
