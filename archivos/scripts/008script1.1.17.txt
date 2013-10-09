@@ -1,0 +1,14 @@
+ALTER TABLE  `facturas_tipos` ADD  `Prefijo` VARCHAR( 2 ) NULL;
+ALTER TABLE  `configuracion` ADD  `FechaAfectada` TINYINT NULL DEFAULT  '0', ADD  `HorasAfectacion` TINYINT NULL DEFAULT  '0';
+ALTER TABLE  `configuracion` ADD  `AfectarAntesDe` TINYINT NULL DEFAULT  '0';
+CREATE TABLE IF NOT EXISTS `tipos_cobro` (
+  `IdTipoCobro` int(11) NOT NULL,
+  `NmTipoCobro` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`IdTipoCobro`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+INSERT INTO `tipos_cobro` (`IdTipoCobro`, `NmTipoCobro`) VALUES
+(1, 'Contado'),
+(2, 'Destino'),
+(3, 'Corriente');
+ALTER TABLE  `correcciones` ADD  `GuiaTipoC` INT NULL AFTER  `UnidadesC`
