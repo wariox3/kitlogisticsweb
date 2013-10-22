@@ -1,1 +1,2 @@
 ALTER TABLE  `terceros` ADD  `DigitoVerificacion` SMALLINT NULL DEFAULT  '0' AFTER  `Plazo`;
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('35',  'Facturacion',  'Impresion factura planillas',  'Factura planillas.rpt');
