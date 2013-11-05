@@ -1,3 +1,5 @@
-ALTER TABLE  `terceros` ADD  `DigitoVerificacion` SMALLINT NULL DEFAULT  '0' AFTER  `Plazo`;
-INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('35',  'Facturacion',  'Impresion factura planillas',  'Factura planillas.rpt');
-ALTER TABLE  `guias` CHANGE  `EmpaqueRef`  `EmpaqueRef` VARCHAR( 80 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+ALTER TABLE `terceros` ADD  `DigitoVerificacion` SMALLINT NULL DEFAULT  '0' AFTER  `Plazo`;
+INSERT INTO `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('35',  'Facturacion',  'Impresion factura planillas',  'Factura planillas.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('36', 'Movimiento', 'Novedades clientes', 'Novedades cliente.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('37', 'Movimiento', 'Redespachos', 'Redespachos.rpt');
+ALTER TABLE `guias` CHANGE  `EmpaqueRef`  `EmpaqueRef` VARCHAR( 80 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
