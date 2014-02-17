@@ -1,2 +1,3 @@
 ALTER TABLE  `configuracion` ADD  `ConsecutivoGuiasFactura` TINYINT NOT NULL DEFAULT  '0';
 ALTER TABLE  `consecutivos` ADD  `GuiasFactura` INT NOT NULL DEFAULT  '0';
+ALTER TABLE  `facturas` ADD  `ValorEnLetras` VARCHAR( 250 ) NOT NULL;
