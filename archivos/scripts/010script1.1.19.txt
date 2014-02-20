@@ -2,4 +2,5 @@ ALTER TABLE  `configuracion` ADD  `ConsecutivoGuiasFactura` TINYINT NOT NULL DEF
 ALTER TABLE  `consecutivos` ADD  `GuiasFactura` INT NOT NULL DEFAULT  '0';
 ALTER TABLE  `facturas` ADD  `ValorEnLetras` VARCHAR( 250 ) NOT NULL;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('38',  'Movimiento',  'Guias Factura',  'Guias factura.rpt');
-
+INSERT INTO `bdkl`.`tipos_cobro` (`IdTipoCobro`, `NmTipoCobro`) VALUES ('4', 'Cortesia');
+INSERT INTO  `bdkl`.`guias_tipos` (`IdGuiaTipo` ,`NmGuiaTipo` ,`GuiaFactura` ,`TipoCobro`)VALUES ('4',  'GUIA DE CORTESIA',  '0',  '4');
