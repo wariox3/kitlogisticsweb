@@ -1,0 +1,39 @@
+CREATE TABLE IF NOT EXISTS `log_guias` (
+  `IdLog` int(11) NOT NULL AUTO_INCREMENT,
+  `Fecha` datetime NOT NULL,
+  `Guia` int(11) NOT NULL,
+  `IdAccionLog` tinyint(4) NOT NULL,
+  `IdUsuario` int(11) NOT NULL,
+  PRIMARY KEY (`IdLog`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=10 ;
+
+CREATE TABLE IF NOT EXISTS `log_guias_acciones` (
+  `IdAccionLog` int(11) NOT NULL,
+  `NmAccion` varchar(30) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`IdAccionLog`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE TABLE IF NOT EXISTS `temp_guias_despacho_anulado` (
+  `IdTemp` int(11) NOT NULL AUTO_INCREMENT,
+  `Guia` int(11) DEFAULT NULL,
+  PRIMARY KEY (`IdTemp`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+
+ALTER TABLE `vehiculos`
+  DROP `IdAfiliadora`,
+  DROP `TOperacion`,
+  DROP `VenceTOperacion`;
+
+ALTER TABLE  `vehiculos` ADD  `NumeroTecnicomecanica` VARCHAR( 60 ) NULL AFTER  `VehConfiguracion`;
+
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('39', 'Movimiento', 'Relacion guias cumplidos', 'RelacionGuiasCumplidos.rpt');
+
+INSERT INTO `log_guias_acciones` (`IdAccionLog`, `NmAccion`) VALUES
+(1, 'CREAR'),
+(2, 'ANULAR'),
+(3, 'EXPORTAR CONTABILIDAD'),
+(4, 'ENTREGA'),
+(5, 'DESCARGA'),
+(6, 'EDITAR'),
+(7, 'IMPRIMIR'),
+(8, 'CORREGIR');
