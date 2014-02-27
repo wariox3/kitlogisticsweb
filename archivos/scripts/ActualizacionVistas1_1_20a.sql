@@ -218,53 +218,41 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `sql_im_ordendespacho`
+-- Temporary table structure for view `sql_if_imp_factura_conceptos`
 --
 
-DROP TABLE IF EXISTS `sql_im_ordendespacho`;
-/*!50001 DROP VIEW IF EXISTS `sql_im_ordendespacho`*/;
+DROP TABLE IF EXISTS `sql_if_imp_factura_conceptos`;
+/*!50001 DROP VIEW IF EXISTS `sql_if_imp_factura_conceptos`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE TABLE `sql_im_ordendespacho` (
-  `Guia` int(11),
-  `CR` smallint(6),
-  `Remitente` varchar(50),
-  `IdCliente` int(11),
-  `DocCliente` varchar(15),
-  `NmDestinatario` varchar(50),
-  `DirDestinatario` varchar(50),
-  `TelDestinatario` varchar(11),
-  `IdCiuDestino` int(11),
-  `IdRuta` int(11),
-  `FhEntradaBodega` datetime,
-  `FhEntregaMercancia` datetime,
-  `VrDeclarado` double,
-  `VrFlete` double,
-  `VrManejo` double,
-  `Unidades` int(11),
-  `KilosReales` int(11),
-  `KilosFacturados` int(11),
-  `KilosVolumen` int(11),
-  `Estado` varchar(1),
+/*!50001 CREATE TABLE `sql_if_imp_factura_conceptos` (
+  `FhFac` datetime,
+  `RazonSocial` varchar(100),
+  `TFlete` double,
+  `TManejo` double,
+  `TOtros` double,
+  `NroGuias` int(11),
+  `Nit` varchar(12),
+  `Nombre` varchar(50),
+  `Direccion` varchar(80),
+  `Telefono` varchar(50),
+  `Logo` mediumblob,
+  `FhVenceFac` datetime,
+  `NumeroFactura` int(11),
+  `Plazo` int(11),
+  `NmFormaPago` varchar(60),
+  `DireccionTercero` varchar(50),
+  `TelefonoTercero` varchar(11),
+  `NmCiudadTercero` varchar(50),
+  `IdCliente` varchar(11),
+  `Notas` mediumtext,
+  `TotalFactura` double,
+  `DigitoVerificacion` tinyint(4),
+  `ValorEnLetras` varchar(250),
+  `IdConceptoFactura` int(11),
   `IdFactura` int(11),
-  `IdDespacho` int(11),
-  `Observaciones` varchar(200),
-  `COIng` smallint(6),
-  `Cuenta` varchar(11),
-  `Cliente` varchar(60),
-  `Recaudo` double,
-  `Orden` int(11),
-  `EmpaqueRef` varchar(80),
-  `TpServicio` tinyint(4),
-  `IdTpCtaFlete` tinyint(4),
-  `IdTpCtaManejo` tinyint(4),
-  `CPorte` tinyint(4),
-  `Entregada` tinyint(4),
-  `Descargada` tinyint(4),
-  `FhDescargada` datetime,
-  `Despachada` tinyint(4),
-  `Anulada` tinyint(4),
-  `NmCiudad` varchar(50)
+  `Valor` double,
+  `NmConcepto` varchar(80)
 ) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
@@ -1344,6 +1332,57 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary table structure for view `sql_im_ordendespacho`
+--
+
+DROP TABLE IF EXISTS `sql_im_ordendespacho`;
+/*!50001 DROP VIEW IF EXISTS `sql_im_ordendespacho`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `sql_im_ordendespacho` (
+  `Guia` int(11),
+  `CR` smallint(6),
+  `Remitente` varchar(50),
+  `IdCliente` int(11),
+  `DocCliente` varchar(15),
+  `NmDestinatario` varchar(50),
+  `DirDestinatario` varchar(50),
+  `TelDestinatario` varchar(11),
+  `IdCiuDestino` int(11),
+  `IdRuta` int(11),
+  `FhEntradaBodega` datetime,
+  `FhEntregaMercancia` datetime,
+  `VrDeclarado` double,
+  `VrFlete` double,
+  `VrManejo` double,
+  `Unidades` int(11),
+  `KilosReales` int(11),
+  `KilosFacturados` int(11),
+  `KilosVolumen` int(11),
+  `Estado` varchar(1),
+  `IdFactura` int(11),
+  `IdDespacho` int(11),
+  `Observaciones` varchar(200),
+  `COIng` smallint(6),
+  `Cuenta` varchar(11),
+  `Cliente` varchar(60),
+  `Recaudo` double,
+  `Orden` int(11),
+  `EmpaqueRef` varchar(80),
+  `TpServicio` tinyint(4),
+  `IdTpCtaFlete` tinyint(4),
+  `IdTpCtaManejo` tinyint(4),
+  `CPorte` tinyint(4),
+  `Entregada` tinyint(4),
+  `Descargada` tinyint(4),
+  `FhDescargada` datetime,
+  `Despachada` tinyint(4),
+  `Anulada` tinyint(4),
+  `NmCiudad` varchar(50)
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary table structure for view `sql_im_impanuncio`
 --
 
@@ -2052,11 +2091,11 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
--- Final view structure for view `sql_im_ordendespacho`
+-- Final view structure for view `sql_if_imp_factura_conceptos`
 --
 
-/*!50001 DROP TABLE IF EXISTS `sql_im_ordendespacho`*/;
-/*!50001 DROP VIEW IF EXISTS `sql_im_ordendespacho`*/;
+/*!50001 DROP TABLE IF EXISTS `sql_if_imp_factura_conceptos`*/;
+/*!50001 DROP VIEW IF EXISTS `sql_if_imp_factura_conceptos`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
@@ -2065,7 +2104,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `sql_im_ordendespacho` AS select `guias`.`Guia` AS `Guia`,`guias`.`CR` AS `CR`,`guias`.`Remitente` AS `Remitente`,`guias`.`IdCliente` AS `IdCliente`,`guias`.`DocCliente` AS `DocCliente`,`guias`.`NmDestinatario` AS `NmDestinatario`,`guias`.`DirDestinatario` AS `DirDestinatario`,`guias`.`TelDestinatario` AS `TelDestinatario`,`guias`.`IdCiuDestino` AS `IdCiuDestino`,`guias`.`IdRuta` AS `IdRuta`,`guias`.`FhEntradaBodega` AS `FhEntradaBodega`,`guias`.`FhEntregaMercancia` AS `FhEntregaMercancia`,`guias`.`VrDeclarado` AS `VrDeclarado`,`guias`.`VrFlete` AS `VrFlete`,`guias`.`VrManejo` AS `VrManejo`,`guias`.`Unidades` AS `Unidades`,`guias`.`KilosReales` AS `KilosReales`,`guias`.`KilosFacturados` AS `KilosFacturados`,`guias`.`KilosVolumen` AS `KilosVolumen`,`guias`.`Estado` AS `Estado`,`guias`.`IdFactura` AS `IdFactura`,`guias`.`IdDespacho` AS `IdDespacho`,`guias`.`Observaciones` AS `Observaciones`,`guias`.`COIng` AS `COIng`,`guias`.`Cuenta` AS `Cuenta`,`guias`.`Cliente` AS `Cliente`,`guias`.`Recaudo` AS `Recaudo`,`guias`.`Orden` AS `Orden`,`guias`.`EmpaqueRef` AS `EmpaqueRef`,`guias`.`TpServicio` AS `TpServicio`,`guias`.`IdTpCtaFlete` AS `IdTpCtaFlete`,`guias`.`IdTpCtaManejo` AS `IdTpCtaManejo`,`guias`.`CPorte` AS `CPorte`,`guias`.`Entregada` AS `Entregada`,`guias`.`Descargada` AS `Descargada`,`guias`.`FhDescargada` AS `FhDescargada`,`guias`.`Despachada` AS `Despachada`,`guias`.`Anulada` AS `Anulada`,`ciudades`.`NmCiudad` AS `NmCiudad` from (`guias` join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) */;
+/*!50001 VIEW `sql_if_imp_factura_conceptos` AS select `facturas`.`FhFac` AS `FhFac`,`terceros`.`RazonSocial` AS `RazonSocial`,`facturas`.`TFlete` AS `TFlete`,`facturas`.`TManejo` AS `TManejo`,`facturas`.`TOtros` AS `TOtros`,`facturas`.`NroGuias` AS `NroGuias`,`informacionempresa`.`Nit` AS `Nit`,`informacionempresa`.`Nombre` AS `Nombre`,`informacionempresa`.`Direccion` AS `Direccion`,`informacionempresa`.`Telefono` AS `Telefono`,`informacionempresa`.`Logo` AS `Logo`,`facturas`.`FhVenceFac` AS `FhVenceFac`,`facturas`.`IdFactura` AS `NumeroFactura`,`facturas`.`Plazo` AS `Plazo`,`formas_pago`.`NmFormaPago` AS `NmFormaPago`,`terceros`.`Direccion` AS `DireccionTercero`,`terceros`.`Telefono` AS `TelefonoTercero`,`ciudadtercero`.`NmCiudad` AS `NmCiudadTercero`,`facturas`.`IdCliente` AS `IdCliente`,`facturas`.`Notas` AS `Notas`,`facturas`.`TotalFactura` AS `TotalFactura`,`terceros`.`DigitoVerificacion` AS `DigitoVerificacion`,`facturas`.`ValorEnLetras` AS `ValorEnLetras`,`conceptosfacturas`.`IdConceptoFactura` AS `IdConceptoFactura`,`conceptosfacturas`.`IdFactura` AS `IdFactura`,`conceptosfacturas`.`Valor` AS `Valor`,`conceptoscontables`.`NmConcepto` AS `NmConcepto` from ((`conceptosfacturas` left join ((((`facturas` left join `terceros` on((`facturas`.`IdCliente` = `terceros`.`IDTercero`))) left join `informacionempresa` on((`facturas`.`IdEmpresa` = `informacionempresa`.`Id`))) left join `formas_pago` on((`facturas`.`IdFormaPago` = `formas_pago`.`IdFormaPago`))) left join `ciudades` `ciudadtercero` on((`terceros`.`IdCiudad` = `ciudadtercero`.`IdCiudad`))) on((`facturas`.`IdFactura` = `conceptosfacturas`.`IdFactura`))) left join `conceptoscontables` on((`conceptosfacturas`.`IdConcepto` = `conceptoscontables`.`IdConcepto`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -2603,6 +2642,25 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `sql_im_ordendespacho`
+--
+
+/*!50001 DROP TABLE IF EXISTS `sql_im_ordendespacho`*/;
+/*!50001 DROP VIEW IF EXISTS `sql_im_ordendespacho`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `sql_im_ordendespacho` AS select `guias`.`Guia` AS `Guia`,`guias`.`CR` AS `CR`,`guias`.`Remitente` AS `Remitente`,`guias`.`IdCliente` AS `IdCliente`,`guias`.`DocCliente` AS `DocCliente`,`guias`.`NmDestinatario` AS `NmDestinatario`,`guias`.`DirDestinatario` AS `DirDestinatario`,`guias`.`TelDestinatario` AS `TelDestinatario`,`guias`.`IdCiuDestino` AS `IdCiuDestino`,`guias`.`IdRuta` AS `IdRuta`,`guias`.`FhEntradaBodega` AS `FhEntradaBodega`,`guias`.`FhEntregaMercancia` AS `FhEntregaMercancia`,`guias`.`VrDeclarado` AS `VrDeclarado`,`guias`.`VrFlete` AS `VrFlete`,`guias`.`VrManejo` AS `VrManejo`,`guias`.`Unidades` AS `Unidades`,`guias`.`KilosReales` AS `KilosReales`,`guias`.`KilosFacturados` AS `KilosFacturados`,`guias`.`KilosVolumen` AS `KilosVolumen`,`guias`.`Estado` AS `Estado`,`guias`.`IdFactura` AS `IdFactura`,`guias`.`IdDespacho` AS `IdDespacho`,`guias`.`Observaciones` AS `Observaciones`,`guias`.`COIng` AS `COIng`,`guias`.`Cuenta` AS `Cuenta`,`guias`.`Cliente` AS `Cliente`,`guias`.`Recaudo` AS `Recaudo`,`guias`.`Orden` AS `Orden`,`guias`.`EmpaqueRef` AS `EmpaqueRef`,`guias`.`TpServicio` AS `TpServicio`,`guias`.`IdTpCtaFlete` AS `IdTpCtaFlete`,`guias`.`IdTpCtaManejo` AS `IdTpCtaManejo`,`guias`.`CPorte` AS `CPorte`,`guias`.`Entregada` AS `Entregada`,`guias`.`Descargada` AS `Descargada`,`guias`.`FhDescargada` AS `FhDescargada`,`guias`.`Despachada` AS `Despachada`,`guias`.`Anulada` AS `Anulada`,`ciudades`.`NmCiudad` AS `NmCiudad` from (`guias` join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `sql_im_impanuncio`
 --
 
@@ -2904,4 +2962,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-02-27 13:59:15
+-- Dump completed on 2014-02-27 16:56:31
