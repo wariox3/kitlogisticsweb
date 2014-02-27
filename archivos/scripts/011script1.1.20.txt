@@ -27,6 +27,7 @@ ALTER TABLE `vehiculos`
 ALTER TABLE  `vehiculos` ADD  `NumeroTecnicomecanica` VARCHAR( 60 ) NULL AFTER  `VehConfiguracion`;
 
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('39', 'Movimiento', 'Relacion guias cumplidos', 'RelacionGuiasCumplidos.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('40', 'Facturacion', 'Formato factura conceptos', 'FacturaConceptosCuartas.rpt');
 
 INSERT INTO `log_guias_acciones` (`IdAccionLog`, `NmAccion`) VALUES
 (1, 'CREAR'),
