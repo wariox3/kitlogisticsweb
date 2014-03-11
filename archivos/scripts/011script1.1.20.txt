@@ -38,3 +38,5 @@ INSERT INTO `log_guias_acciones` (`IdAccionLog`, `NmAccion`) VALUES
 (6, 'EDITAR'),
 (7, 'IMPRIMIR'),
 (8, 'CORREGIR');
+
+INSERT INTO `bdkl`.`permisosespeciales` (`IdPermiso`, `NmPermiso`, `Descripcion`) VALUES ('14', 'Correccion guias', 'Corregir guías factura');
