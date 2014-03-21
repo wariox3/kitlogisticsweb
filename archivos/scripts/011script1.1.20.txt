@@ -26,6 +26,13 @@ ALTER TABLE `vehiculos`
 
 ALTER TABLE  `vehiculos` ADD  `NumeroTecnicomecanica` VARCHAR( 60 ) NULL AFTER  `VehConfiguracion`;
 
+ALTER TABLE  `conductores` ADD  `NroSeguridadSocial` VARCHAR( 25 ) NULL AFTER  `PlacaPred`;
+ALTER TABLE  `conductores` ADD  `FhVenceSeguridadSocial` DATE NULL AFTER  `NroSeguridadSocial`;
+UPDATE conductores SET FhVenceSeguridadSocial =  '2014-03-20';
+
+ALTER TABLE  `vehiculos` ADD  `FhVenceTecnicomecanica` DATE NULL AFTER  `NumeroTecnicomecanica`;
+UPDATE vehiculos SET FhVenceTecnicomecanica =  '2014-03-20';
+
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('39', 'Movimiento', 'Relacion guias cumplidos', 'RelacionGuiasCumplidos.rpt');
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('40', 'Facturacion', 'Formato factura conceptos', 'FacturaConceptosCuartas.rpt');
 
