@@ -1,3 +1,5 @@
 ALTER TABLE  `despachos` CHANGE  `PagoCargue`  `PagoCargue` VARCHAR( 80 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE  `despachos` CHANGE  `PagoDescargue`  `PagoDescargue` VARCHAR( 80 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
 ALTER TABLE  `configuracion` ADD  `ImprimirGuiaFormato` TINYINT NULL DEFAULT  '0';
+ALTER TABLE  `despachos` ADD  `EnviadoGuia` TINYINT( 1 ) NOT NULL DEFAULT  '0';
+ALTER TABLE  `negociaciones` ADD  `RedondearFlete` TINYINT( 1 ) NOT NULL DEFAULT  '0';
