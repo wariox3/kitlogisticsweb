@@ -1,0 +1,9 @@
+ALTER TABLE  `guias` ADD  `CodigoBarras` VARCHAR( 20 ) NULL;
+DROP TRIGGER IF EXISTS `GeneraCodigoBarras`;
+DELIMITER ;;
+CREATE TRIGGER `GeneraCodigoBarras` BEFORE INSERT ON `guias` FOR EACH ROW BEGIN
+  SET NEW.CodigoBarras = concat("*", NEW.Guia,"*");	
+END
+;;
+DELIMITER ;
+UPDATE guias SET CodigoBarras = concat("*", Guia,"*");
