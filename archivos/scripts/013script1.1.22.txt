@@ -7,3 +7,44 @@ END
 ;;
 DELIMITER ;
 UPDATE guias SET CodigoBarras = concat("*", Guia,"*");
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('41',  'Movimiento',  'Impresion de la guia clientes',  'FormatoGuiasClientesCuartas.rpt');
+CREATE TABLE IF NOT EXISTS `guias_cliente` (
+  `Guia` int(11) NOT NULL DEFAULT '0',
+  `IdTercero` varchar(11) CHARACTER SET latin1 DEFAULT NULL,
+  `CodigoBarras` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`Guia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+CREATE TABLE IF NOT EXISTS `guias_lotes` (
+  `IdLote` int(11) NOT NULL AUTO_INCREMENT,
+  `IdTercero` varchar(11) COLLATE utf8_spanish_ci NOT NULL,
+  `Desde` int(11) NOT NULL,
+  `Hasta` int(11) NOT NULL,
+  PRIMARY KEY (`IdLote`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sql_im_impguia_clientes` AS 
+  select 
+    `guias_cliente`.`Guia` AS `Guia`,
+    `guias_cliente`.`IdTercero` AS `IdTercero`,
+    `guias_cliente`.`CodigoBarras` AS `CodigoBarras`,
+    `terceros`.`RazonSocial` AS `RazonSocial`,
+    `terceros`.`Direccion` AS `Direccion`,
+    `terceros`.`Telefono` AS `Telefono`,
+    `informacionempresa`.`Id` AS `Id`,
+    `informacionempresa`.`Nit` AS `Nit`,
+    `informacionempresa`.`Nombre` AS `Nombre`,
+    `informacionempresa`.`Direccion` AS `DireccionEmpresa`,
+    `informacionempresa`.`Telefono` AS `TelefonoEmpresa`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `informacionempresa`.`NroPoliza` AS `NroPoliza`,
+    `informacionempresa`.`NitAseguradora` AS `NitAseguradora`,
+    `informacionempresa`.`VencePoliza` AS `VencePoliza`,
+    `informacionempresa`.`DireccionTerritorial` AS `DireccionTerritorial`,
+    `informacionempresa`.`Email` AS `Email`,
+    `informacionempresa`.`Aseguradora` AS `Aseguradora`,
+    `informacionempresa`.`CodRegionalMin` AS `CodRegionalMin`,
+    `informacionempresa`.`CodEmpresaMin` AS `CodEmpresaMin`,
+    `informacionempresa`.`ResolucionMinTransporte` AS `ResolucionMinTransporte` 
+  from 
+    ((`guias_cliente` join `terceros` on((`terceros`.`IDTercero` = `guias_cliente`.`IdTercero`))) join `informacionempresa`);
