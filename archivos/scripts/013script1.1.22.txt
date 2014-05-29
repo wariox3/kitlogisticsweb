@@ -1,4 +1,6 @@
+ALTER TABLE  `despachos_control_mt` ADD  `NoReportado` TINYINT NULL DEFAULT  '0';
 ALTER TABLE  `guias` ADD  `CodigoBarras` VARCHAR( 20 ) NULL;
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('41',  'Movimiento',  'Impresion de la guia clientes',  'FormatoGuiasClientesCuartas.rpt');
 DROP TRIGGER IF EXISTS `GeneraCodigoBarras`;
 DELIMITER ;;
 CREATE TRIGGER `GeneraCodigoBarras` BEFORE INSERT ON `guias` FOR EACH ROW BEGIN
@@ -7,7 +9,7 @@ END
 ;;
 DELIMITER ;
 UPDATE guias SET CodigoBarras = concat("*", Guia,"*");
-INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('41',  'Movimiento',  'Impresion de la guia clientes',  'FormatoGuiasClientesCuartas.rpt');
+
 CREATE TABLE IF NOT EXISTS `guias_cliente` (
   `Guia` int(11) NOT NULL DEFAULT '0',
   `IdTercero` varchar(11) CHARACTER SET latin1 DEFAULT NULL,
