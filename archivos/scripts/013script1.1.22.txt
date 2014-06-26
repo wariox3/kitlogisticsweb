@@ -50,3 +50,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
     `informacionempresa`.`ResolucionMinTransporte` AS `ResolucionMinTransporte` 
   from 
     ((`guias_cliente` join `terceros` on((`terceros`.`IDTercero` = `guias_cliente`.`IdTercero`))) join `informacionempresa`);
+
+CREATE TABLE IF NOT EXISTS `asesores` (
+  `IdAsesor` int(11) NOT NULL AUTO_INCREMENT,
+  `NmAsesor` varchar(80) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `NitAsesor` varchar(15) COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`IdAsesor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1;
+
+ALTER TABLE  `terceros` ADD  `IdAsesor` INT NULL AFTER  `DigitoVerificacion`;
+update terceros set IdAsesor = 1;
+INSERT INTO `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('42',  'Movimiento',  'Produccion por asesor',  'ProducccionAsesores.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('43', 'ListasPrecios', 'Reporte lista precios', 'ListaPrecio.rpt');
