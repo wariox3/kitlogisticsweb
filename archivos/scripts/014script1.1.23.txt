@@ -6,3 +6,4 @@ CREATE TABLE IF NOT EXISTS `centros_costos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
 INSERT INTO `centros_costos` (`IdCentroCostos`, `NmCentroCostos`) VALUES
 (1, 'PRINCIPAL');
+update terceros set IdCentroCostos = 1;
