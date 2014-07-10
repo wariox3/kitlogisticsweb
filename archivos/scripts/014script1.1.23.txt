@@ -1,0 +1,8 @@
+ALTER TABLE  `terceros` ADD  `IdCentroCostos` INT NULL AFTER  `IdAsesor`;
+CREATE TABLE IF NOT EXISTS `centros_costos` (
+  `IdCentroCostos` int(11) NOT NULL AUTO_INCREMENT,
+  `NmCentroCostos` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`IdCentroCostos`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
+INSERT INTO `centros_costos` (`IdCentroCostos`, `NmCentroCostos`) VALUES
+(1, 'PRINCIPAL');
