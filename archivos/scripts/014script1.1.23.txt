@@ -7,3 +7,4 @@ CREATE TABLE IF NOT EXISTS `centros_costos` (
 INSERT INTO `centros_costos` (`IdCentroCostos`, `NmCentroCostos`) VALUES
 (1, 'PRINCIPAL');
 update terceros set IdCentroCostos = 1;
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('44', 'Recogidas', 'Formato recogidas', 'FormatoRecogidas.rpt');
