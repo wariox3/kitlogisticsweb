@@ -8,3 +8,5 @@ INSERT INTO `centros_costos` (`IdCentroCostos`, `NmCentroCostos`) VALUES
 (1, 'PRINCIPAL');
 update terceros set IdCentroCostos = 1;
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('44', 'Recogidas', 'Formato recogidas', 'FormatoRecogidas.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('45', 'Movimiento', 'Liquidacion 2', 'LiquidacionDespacho2.rpt');
+ALTER TABLE  `despachos` ADD  `TotalCE` DOUBLE NULL DEFAULT  '0';
