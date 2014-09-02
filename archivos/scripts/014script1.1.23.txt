@@ -9,4 +9,7 @@ INSERT INTO `centros_costos` (`IdCentroCostos`, `NmCentroCostos`) VALUES
 update terceros set IdCentroCostos = 1;
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('44', 'Recogidas', 'Formato recogidas', 'FormatoRecogidas.rpt');
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('45', 'Movimiento', 'Liquidacion 2', 'LiquidacionDespacho2.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('46', 'Movimiento', 'Relacion recibos caja', 'RelacionRecibosCaja.rpt');
 ALTER TABLE  `despachos` ADD  `TotalCE` DOUBLE NULL DEFAULT  '0';
+ALTER TABLE  `despachos` ADD  `FleteContado` DOUBLE NULL DEFAULT  '0', ADD  `ManejoContado` DOUBLE NULL DEFAULT  '0', ADD  `FleteCorriente` DOUBLE NULL DEFAULT  '0',ADD  `ManejoCorriente` DOUBLE NULL DEFAULT  '0';
+ALTER TABLE  `despachos` ADD  `FleteCETotal` DOUBLE NULL DEFAULT  '0', ADD  `ManejoCETotal` DOUBLE NULL DEFAULT  '0';
