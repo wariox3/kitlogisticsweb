@@ -6,10 +6,11 @@ CREATE TABLE IF NOT EXISTS `centros_costos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
 INSERT INTO `centros_costos` (`IdCentroCostos`, `NmCentroCostos`) VALUES
 (1, 'PRINCIPAL');
-update terceros set IdCentroCostos = 1;
+update terceros set IdCentroCostos = 1 where IdCentroCostos IS NULL;
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('44', 'Recogidas', 'Formato recogidas', 'FormatoRecogidas.rpt');
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('45', 'Movimiento', 'Liquidacion 2', 'LiquidacionDespacho2.rpt');
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('46', 'Movimiento', 'Relacion recibos caja', 'RelacionRecibosCaja.rpt');
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('47', 'Facturacion', 'Listado facturas', 'ListaFacturas.rpt');
 ALTER TABLE  `despachos` ADD  `TotalCE` DOUBLE NULL DEFAULT  '0';
 ALTER TABLE  `despachos` ADD  `FleteContado` DOUBLE NULL DEFAULT  '0', ADD  `ManejoContado` DOUBLE NULL DEFAULT  '0', ADD  `FleteCorriente` DOUBLE NULL DEFAULT  '0',ADD  `ManejoCorriente` DOUBLE NULL DEFAULT  '0';
 ALTER TABLE  `despachos` ADD  `FleteCETotal` DOUBLE NULL DEFAULT  '0', ADD  `ManejoCETotal` DOUBLE NULL DEFAULT  '0';
