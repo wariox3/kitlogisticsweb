@@ -1,0 +1,6 @@
+ALTER TABLE  `configuracion` ADD  `ejeServidor` VARCHAR( 150 ) NOT NULL ,
+ADD  `ejePuerto` VARCHAR( 6 ) NOT NULL ,
+ADD  `ejeBaseDatos` VARCHAR( 20 ) NOT NULL ,
+ADD  `ejeUsuario` VARCHAR( 50 ) NOT NULL ,
+ADD  `ejeClave` VARCHAR( 50 ) NOT NULL ,
+ADD  `ejeDriver` VARCHAR( 150 ) NOT NULL;
