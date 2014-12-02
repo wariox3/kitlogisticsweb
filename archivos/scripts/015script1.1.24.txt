@@ -5,3 +5,4 @@ ADD  `ejeUsuario` VARCHAR( 50 ) NOT NULL ,
 ADD  `ejeClave` VARCHAR( 50 ) NOT NULL ,
 ADD  `ejeDriver` VARCHAR( 150 ) NOT NULL;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('48',  'Movimiento',  'Listado despachos',  'ListaDespachos.rpt');
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('49',  'Facturacion',  'Facturado Asesor',  'FacturadoAsesor.rpt');
