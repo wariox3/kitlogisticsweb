@@ -7,3 +7,6 @@ ADD  `ejeDriver` VARCHAR( 150 ) NOT NULL;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('48',  'Movimiento',  'Listado despachos',  'ListaDespachos.rpt');
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('49',  'Facturacion',  'Facturado Asesor',  'FacturadoAsesor.rpt');
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('50',  'Monitoreo',  'Lista monitoreos',  'Monitoreos.rpt');
+ALTER TABLE  `vehiculos` ADD  `UsuarioSatelital` VARCHAR( 50 ) NULL AFTER  `NumeroTecnicomecanica` ,
+ADD  `ClaveSatelital` VARCHAR( 50 ) NULL AFTER  `UsuarioSatelital` ,
+ADD  `PaginaSatelital` VARCHAR( 200 ) NULL AFTER  `ClaveSatelital`;
