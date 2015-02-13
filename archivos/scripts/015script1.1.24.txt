@@ -10,3 +10,13 @@ INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('5
 ALTER TABLE  `vehiculos` ADD  `UsuarioSatelital` VARCHAR( 50 ) NULL AFTER  `NumeroTecnicomecanica` ,
 ADD  `ClaveSatelital` VARCHAR( 50 ) NULL AFTER  `UsuarioSatelital` ,
 ADD  `PaginaSatelital` VARCHAR( 200 ) NULL AFTER  `ClaveSatelital`;
+ALTER TABLE  `despachos_control_mt` ADD  `Cumplido` TINYINT NULL DEFAULT  '0', ADD  `NumeroCumplidoRemesa` VARCHAR( 50 ) NULL ,ADD  `NumeroCumplidoManifiesto` VARCHAR( 50 ) NULL;
+CREATE TABLE IF NOT EXISTS `aprobaciones_ws` (
+  `codigo` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime NOT NULL,
+  `modulo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `referencia` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `id_aprobacion` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`codigo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=1 ;
+ALTER TABLE  `despachos_control_mt` ADD  `NoCumplido` TINYINT NULL DEFAULT  '0';
