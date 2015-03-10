@@ -22,3 +22,6 @@ CREATE TABLE IF NOT EXISTS `aprobaciones_ws` (
 ALTER TABLE  `despachos_control_mt` ADD  `NoCumplido` TINYINT NULL DEFAULT  '0';
 ALTER TABLE  `vehiculos` ADD  `VehiculoPropio` TINYINT NULL DEFAULT  '0';
 ALTER TABLE  `despachos` ADD  `ExportadoContabilidad` TINYINT NULL DEFAULT  '0';
+ALTER TABLE  `listaspreciosciudades` ADD  `IdCiudadOrigen` INT NULL AFTER  `IdListaPrecios`;
+ALTER TABLE listaspreciosciudades DROP PRIMARY KEY;
+ALTER TABLE  `listaspreciosciudades` ADD PRIMARY KEY (  `IdListaPrecios` ,  `IdCiudadOrigen` ,  `IdCiudad` ,  `IdProducto` ) ;
