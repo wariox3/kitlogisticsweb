@@ -1,0 +1,1 @@
+INSERT INTO `bdkl`.`permisosespeciales` (`IdPermiso`, `NmPermiso`, `Descripcion`) VALUES (NULL, 'Descargar guia destino', 'Permiso para descargar una guia tipo destino');
