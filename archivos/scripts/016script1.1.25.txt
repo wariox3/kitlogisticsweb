@@ -1,1 +1,5 @@
-INSERT INTO `bdkl`.`permisosespeciales` (`IdPermiso`, `NmPermiso`, `Descripcion`) VALUES (NULL, 'Descargar guia destino', 'Permiso para descargar una guia tipo destino');
+INSERT INTO `bdkl`.`permisosespeciales` (`IdPermiso`, `NmPermiso`, `Descripcion`) VALUES (15, 'Descargar guia destino', 'Permiso para descargar una guia tipo destino');
+ALTER TABLE  `facturas_venta` CHANGE  `TipoFactura`  `TipoFactura` INT( 11 ) NOT NULL DEFAULT  '0';
+ALTER TABLE  `facturas_venta` CHANGE  `IdTercero`  `IdTercero` VARCHAR( 11 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ALTER TABLE  `facturas_venta` ADD  `IdPO` INT NULL;
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('51',  'facturacion',  'Listado consolidado facturas',  'FacturasConsolidado.rpt');
