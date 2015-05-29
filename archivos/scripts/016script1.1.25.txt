@@ -3,3 +3,4 @@ ALTER TABLE  `facturas_venta` CHANGE  `TipoFactura`  `TipoFactura` INT( 11 ) NOT
 ALTER TABLE  `facturas_venta` CHANGE  `IdTercero`  `IdTercero` VARCHAR( 11 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
 ALTER TABLE  `facturas_venta` ADD  `IdPO` INT NULL;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('51',  'facturacion',  'Listado consolidado facturas',  'FacturasConsolidado.rpt');
+ALTER TABLE  `temprecios` ADD  `IdCiudadOrigen` INT NOT NULL;
