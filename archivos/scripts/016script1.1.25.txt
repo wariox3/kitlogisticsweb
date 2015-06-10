@@ -4,3 +4,8 @@ ALTER TABLE  `facturas_venta` CHANGE  `IdTercero`  `IdTercero` VARCHAR( 11 ) CHA
 ALTER TABLE  `facturas_venta` ADD  `IdPO` INT NULL;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('51',  'facturacion',  'Listado consolidado facturas',  'FacturasConsolidado.rpt');
 ALTER TABLE  `temprecios` ADD  `IdCiudadOrigen` INT NOT NULL;
+ALTER TABLE  `centrosoperaciones` ADD  `cuenta_flete` VARCHAR( 10 ) NULL;
+ALTER TABLE  `centrosoperaciones` ADD  `cuenta_manejo` VARCHAR( 10 ) NULL;
+ALTER TABLE  `centrosoperaciones` ADD  `cuenta_cartera` VARCHAR( 10 ) NULL;
+ALTER TABLE  `centrosoperaciones` ADD  `comprobante` VARCHAR( 3 ) NULL;
+ALTER TABLE  `centrosoperaciones` ADD  `centro_costos` VARCHAR( 4 ) NULL;
