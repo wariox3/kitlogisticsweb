@@ -9,3 +9,113 @@ ALTER TABLE  `centrosoperaciones` ADD  `cuenta_manejo` VARCHAR( 10 ) NULL;
 ALTER TABLE  `centrosoperaciones` ADD  `cuenta_cartera` VARCHAR( 10 ) NULL;
 ALTER TABLE  `centrosoperaciones` ADD  `comprobante` VARCHAR( 3 ) NULL;
 ALTER TABLE  `centrosoperaciones` ADD  `centro_costos` VARCHAR( 4 ) NULL;
+INSERT INTO  `bdkl`.`log_guias_acciones` (`IdAccionLog` ,`NmAccion`)VALUES ('9',  'DESEMBARCAR');
+ALTER TABLE  `novedades` ADD  `IdCentroOperaciones` SMALLINT NOT NULL;
+UPDATE novedades SET IdCentroOperaciones = 1;
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`)VALUES ('52',  'Movimiento',  'Novedades pendientes centro costo',  'NovedadesPendientesCO.rpt');
+CREATE TABLE IF NOT EXISTS `conductores_imagen` (
+  `IdConductorImagen` varchar(11) NOT NULL,
+  `imagen` mediumblob,
+  `tipo_imagen` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`IdConductorImagen`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+DROP TABLE IF EXISTS `sql_im_imprimirmanifiesto`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW sql_im_imprimirmanifiesto AS 
+  select 
+    `despachos`.`IdManifiesto` AS `IdManifiesto`,
+    `despachos`.`OrdDespacho` AS `OrdDespacho`,
+    `despachos`.`FhExpedicion` AS `FhExpedicion`,
+    `ciudadorigen`.`NmCiudad` AS `NmCiudadOrigen`,
+    `ciudaddestino`.`NmCiudad` AS `NmCiudadDestino`,
+    `vehiculos`.`IdPlaca` AS `IdPlaca`,
+    `vehiculos`.`Modelo` AS `Modelo`,
+    `vehiculos`.`ModeloRep` AS `ModeloRep`,
+    `vehiculos`.`Serie` AS `Serie`,
+    `vehiculos`.`RegNalCarga` AS `RegNalCarga`,
+    `vehiculos`.`VehConfiguracion` AS `VehConfiguracion`,
+    `vehiculos`.`PesoVacio` AS `PesoVacio`,
+    `vehiculos`.`Soat` AS `Soat`,
+    `aseguradora`.`RazonSocial` AS `NmAseguradora`,
+    `vehiculos`.`VenceSoat` AS `VenceSoat`,
+    `vehiculos`.`PlacaRemolque` AS `PlacaRemolque`,
+    `propietario`.`RazonSocial` AS `NmPropietario`,
+    `tenedor`.`RazonSocial` AS `NmTenedor`,
+    `propietario`.`IDTercero` AS `IdPropietario`,
+    `tenedor`.`IDTercero` AS `IdTenedor`,
+    `propietario`.`Direccion` AS `DirPropietario`,
+    `tenedor`.`Direccion` AS `DirTenedor`,
+    `tenedor`.`Telefono` AS `TelTenedor`,
+    `propietario`.`Telefono` AS `TelPropietario`,
+    `ciudadtenedor`.`NmCiudad` AS `CiudadTenedor`,
+    `ciudadpropietario`.`NmCiudad` AS `CiudadPropietario`,
+    `conductores`.`Nombre` AS `Nombre`,
+    `conductores`.`Apellido1` AS `Apellido1`,
+    `conductores`.`Apellido2` AS `Apellido2`,
+    `conductores`.`IdConductor` AS `IdConductor`,
+    `conductores`.`Direccion` AS `Direccion`,
+    `conductores`.`Categoria` AS `Categoria`,
+    `despachos`.`VrFlete` AS `VrFlete`,
+    `despachos`.`VrDctoRteFte` AS `VrDctoRteFte`,
+    `despachos`.`VrDctoIndCom` AS `VrDctoIndCom`,
+    `despachos`.`VrAnticipo` AS `VrAnticipo`,
+    `despachos`.`VrOtrosDctos` AS `VrOtrosDctos`,
+    `informacionempresa`.`Logo` AS `Logo`,
+    `informacionempresa`.`NroPoliza` AS `NroPoliza`,
+    `informacionempresa`.`VencePoliza` AS `VencePoliza`,
+    `despachos`.`NmConductor` AS `NmConductor`,
+    `despachos`.`Observaciones` AS `Observaciones`,
+    `despachos`.`TotalViaje` AS `TotalViaje`,
+    `carrocerias`.`NmCarroceria` AS `NmCarroceria`,
+    `departamentoorigen`.`NmDepartamento` AS `DepartamentoOrigen`,
+    `departamentosdestino`.`NmDepartamento` AS `DepartamentoDestino`,
+    `despachos`.`PagoCargue` AS `PagoCargue`,
+    `despachos`.`PagoDescargue` AS `PagoDescargue`,
+    `despachos`.`FhPagoSaldo` AS `FhPagoSaldo`,
+    `despachos`.`LugarPago` AS `LugarPago`,
+    `informacionempresa`.`Aseguradora` AS `Aseguradora`,
+    `despachos`.`ManElectronico` AS `ManElectronico`,
+    `marcas`.`NmMarca` AS `NmMarca`,
+    `colores`.`NmColor` AS `NmColor`,
+    `lineas`.`NmLinea` AS `NmLinea`,
+    `informacionempresa`.`Nit` AS `NitEmpresa`,
+    `informacionempresa`.`Nombre` AS `NombreEmpresa`,
+    `informacionempresa`.`Direccion` AS `DireccionEmpresa`,
+    `informacionempresa`.`Telefono` AS `TelefonoEmpresa`,
+    `informacionempresa`.`DireccionTerritorial` AS `DireccionTerritorial`,
+    `informacionempresa`.`CodRegionalMin` AS `CodRegionalMin`,
+    `informacionempresa`.`CodEmpresaMin` AS `CodEmpresaMin`,
+    `informacionempresa`.`ResolucionMinTransporte` AS `ResolucionMinTransporte`,
+    (`despachos`.`FleteCE` + `despachos`.`TRecaudo`) AS `TotalContraEntregas`,
+    `despachos`.`Unidades` AS `Unidades1`,
+    `despachos`.`KilosReales` AS `TotalKilosReales`,
+    `despachos`.`Remesas` AS `Remesas`,
+    `despachos`.`Unidades` AS `Unidades`,
+    `conductores_imagen`.`imagen` AS `imagen` 
+  from 
+    (((((((((((((((((`despachos` left join `vehiculos` on((`despachos`.`IdVehiculo` = `vehiculos`.`IdPlaca`))) left join `ciudades` `ciudadorigen` on((`despachos`.`IdCiudadOrigen` = `ciudadorigen`.`IdCiudad`))) left join `ciudades` `ciudaddestino` on((`despachos`.`IdCiudadDestino` = `ciudaddestino`.`IdCiudad`))) left join `terceros` `aseguradora` on((`vehiculos`.`IdAseguradora` = `aseguradora`.`IDTercero`))) left join `terceros` `propietario` on((`vehiculos`.`IdPropietario` = `propietario`.`IDTercero`))) left join `terceros` `tenedor` on((`vehiculos`.`IdTenedor` = `tenedor`.`IDTercero`))) left join `ciudades` `ciudadtenedor` on((`tenedor`.`IdCiudad` = `ciudadtenedor`.`IdCiudad`))) left join `ciudades` `ciudadpropietario` on((`propietario`.`IdCiudad` = `ciudadpropietario`.`IdCiudad`))) left join `conductores` on((`despachos`.`IdConductor` = `conductores`.`IdConductor`))) left join `informacionempresa` on((`despachos`.`IdEmpresa` = `informacionempresa`.`Id`))) left join `carrocerias` on((`vehiculos`.`IdCarroceria` = `carrocerias`.`IdCarroceria`))) left join `departamentos` `departamentosdestino` on((`ciudaddestino`.`IdDepartamento` = `departamentosdestino`.`IdDepartamento`))) left join `departamentos` `departamentoorigen` on((`ciudadorigen`.`IdDepartamento` = `departamentoorigen`.`IdDepartamento`))) left join `marcas` on((`vehiculos`.`IdMarca` = `marcas`.`IdMarca`))) left join `colores` on((`vehiculos`.`IdColor` = `colores`.`IdColor`))) left join `lineas` on((`vehiculos`.`IdLinea` = `lineas`.`IdLinea`))) left join `conductores_imagen` on((convert(`despachos`.`IdConductor` using utf8) = `conductores_imagen`.`IdConductorImagen`)));
+DROP TABLE IF EXISTS `sql_im_novedadespendientesco`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`%` SQL SECURITY DEFINER VIEW sql_im_novedadespendientesco AS 
+  select 
+    `novedades`.`ID` AS `ID`,
+    `novedades`.`Guia` AS `Guia`,
+    `novedades`.`IdNovedad` AS `IdNovedad`,
+    `novedades`.`Comentarios` AS `Comentarios`,
+    `novedades`.`UsuIng` AS `UsuIng`,
+    `novedades`.`FHIngreso` AS `FHIngreso`,
+    `novedades`.`FhNovedad` AS `FhNovedad`,
+    `novedades`.`Solucion` AS `Solucion`,
+    `novedades`.`UsuSol` AS `UsuSol`,
+    `novedades`.`FhSolucion` AS `FhSolucion`,
+    `novedades`.`Solucionada` AS `Solucionada`,
+    `guias`.`Cuenta` AS `Cuenta`,
+    `guias`.`Cliente` AS `Cliente`,
+    `causalesnovedad`.`NmNovedad` AS `NmNovedad`,
+    `guias`.`DocCliente` AS `DocCliente`,
+    `ciudades`.`NmCiudad` AS `NmCiudad`,
+    `guias`.`NmDestinatario` AS `NmDestinatario`,
+    `centrosoperaciones`.`NmPuntoOperaciones` AS `NmPuntoOperaciones`,
+    `novedades`.`IdCentroOperaciones` AS `IdCentroOperaciones` 
+  from 
+    ((((`novedades` join `guias` on((`novedades`.`Guia` = `guias`.`Guia`))) join `causalesnovedad` on((`novedades`.`IdNovedad` = `causalesnovedad`.`IdNovedad`))) join `ciudades` on((`guias`.`IdCiuDestino` = `ciudades`.`IdCiudad`))) left join `centrosoperaciones` on((`novedades`.`IdCentroOperaciones` = `centrosoperaciones`.`IDPO`))) 
+  where 
+    (`novedades`.`Solucionada` = 0);
