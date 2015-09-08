@@ -1,0 +1,1 @@
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('53', 'Movimiento', 'Resumen novedades', 'Novedades.rpt');
