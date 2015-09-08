@@ -12,10 +12,6 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
-CREATE DATABASE `bdkl`
-    CHARACTER SET 'utf8'
-    COLLATE 'utf8_spanish_ci';
-
 USE `bdkl`;
 
 #
