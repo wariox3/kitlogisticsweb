@@ -2,3 +2,4 @@ INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('5
 ALTER TABLE  `facturas` ADD  `codigo_centro_operaciones_fk` SMALLINT NULL AFTER  `IdFormaPago`;
 ALTER TABLE  `facturas_venta` ADD  `IdAsesor` INT NULL;
 ALTER TABLE  `asesores` ADD  `codigo_interface` VARCHAR( 10 ) NULL;
+ALTER TABLE  `terceros` ADD  `CondicionComercial` VARCHAR( 80 ) NULL AFTER  `IdCentroCostos`;
