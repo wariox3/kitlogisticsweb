@@ -3,3 +3,6 @@ ALTER TABLE  `facturas` ADD  `codigo_centro_operaciones_fk` SMALLINT NULL AFTER 
 ALTER TABLE  `facturas_venta` ADD  `IdAsesor` INT NULL;
 ALTER TABLE  `asesores` ADD  `codigo_interface` VARCHAR( 10 ) NULL;
 ALTER TABLE  `terceros` ADD  `CondicionComercial` VARCHAR( 80 ) NULL AFTER  `IdCentroCostos`;
+ALTER TABLE  `terceros` ADD  `ManejaCobroContado` TINYINT NULL DEFAULT  '0',
+ADD  `ManejaCobroDestino` TINYINT NULL DEFAULT  '0',
+ADD  `ManejaCobroCorriente` TINYINT NULL DEFAULT  '0';
