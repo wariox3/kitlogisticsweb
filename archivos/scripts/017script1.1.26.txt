@@ -6,3 +6,11 @@ ALTER TABLE  `terceros` ADD  `CondicionComercial` VARCHAR( 80 ) NULL AFTER  `IdC
 ALTER TABLE  `terceros` ADD  `ManejaCobroContado` TINYINT NULL DEFAULT  '0',
 ADD  `ManejaCobroDestino` TINYINT NULL DEFAULT  '0',
 ADD  `ManejaCobroCorriente` TINYINT NULL DEFAULT  '0';
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('54',  'Facturacion',  'Cartera por edades asesor',  'Cartera por edades asesor.rpt');
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('55',  'Facturacion',  'Imprimir nota debito',  'Imprimir nota debito.rpt');
+ALTER TABLE  `consecutivos` ADD  `NotasDebito` INT NULL DEFAULT  '0';
+ALTER TABLE  `recibos_caja` ADD  `IdReciboTipo` INT NULL;
+ALTER TABLE  `recibos_caja` ADD  `FechaPago` DATE NULL;
+INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('56',  'Facturacion',  'Reporte recibos',  'Recibos.rpt');
+INSERT INTO  `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('57', 'Facturacion', 'Reporte recibos detalles', 'RecibosDetalles.rpt');
+
