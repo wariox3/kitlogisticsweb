@@ -13,4 +13,4 @@ ALTER TABLE  `recibos_caja` ADD  `IdReciboTipo` INT NULL;
 ALTER TABLE  `recibos_caja` ADD  `FechaPago` DATE NULL;
 INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('56',  'Facturacion',  'Reporte recibos',  'Recibos.rpt');
 INSERT INTO  `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('57', 'Facturacion', 'Reporte recibos detalles', 'RecibosDetalles.rpt');
-
+INSERT INTO `bdkl`.`permisosespeciales` (`IdPermiso`, `NmPermiso`, `Descripcion`) VALUES ('16', 'Liberar guias de factura', 'Se utiliza para liberar las guías de una factura que ya fue contabilizada');
