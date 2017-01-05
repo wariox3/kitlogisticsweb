@@ -15,3 +15,10 @@ INSERT INTO  `bdkl`.`reportes` (`IdReporte` ,`Tipo` ,`Nombre` ,`Ruta`) VALUES ('
 INSERT INTO  `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('57', 'Facturacion', 'Reporte recibos detalles', 'RecibosDetalles.rpt');
 INSERT INTO `bdkl`.`permisosespeciales` (`IdPermiso`, `NmPermiso`, `Descripcion`) VALUES ('16', 'Liberar guias de factura', 'Se utiliza para liberar las guías de una factura que ya fue contabilizada');
 INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('58', 'Movimiento', 'Rango guias', 'ImprimirRango.rpt');
+ALTER TABLE  `monitoreocontrolpost` ADD  `usuario` VARCHAR( 50 ) NULL;
+INSERT INTO  `bdkl`.`permisosespeciales` (`IdPermiso` ,`NmPermiso` ,`Descripcion`)VALUES ('18',  'Quitar reporte de monitoreo',  'Se utiliza para quitar un reporte de monitoreo');
+ALTER TABLE  `configuracion` ADD  `fecha_vence_licencia` DATE NULL;
+ALTER TABLE  `nota_credito_tipo` ADD  `anulacion` TINYINT NULL DEFAULT  '0';
+ALTER TABLE  `vehiculosrecogida` ADD  `IdConductor` VARCHAR( 11 ) NULL AFTER  `Placa`;
+ALTER TABLE  `guias` ADD  `CostoReexpedicion` DOUBLE NULL DEFAULT  '0' AFTER  `Abonos`;
+INSERT INTO `bdkl`.`reportes` (`IdReporte`, `Tipo`, `Nombre`, `Ruta`) VALUES ('59', 'Facturacion', 'Notas credito', 'NotaCredito.rpt'), ('60', 'Facturacion', 'Notas credito detalles', 'NotaCreditoDetalle.rpt');
